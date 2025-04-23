@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乳胶管报价计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+        }
+        input {
+            padding: 5px;
+            width: 100px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>乳胶管报价计算器</h1>
+    <div class="form-group">
+        <label for="innerDiameter">内径(mm):</label>
+        <input type="number" id="innerDiameter" step="0.01">
+    </div>
+    <div class="form-group">
+        <label for="outerDiameter">外径(mm):</label>
+        <input type="number" id="outerDiameter" step="0.01">
+    </div>
+    <div class="form-group">
+        <label for="length">长度(m):</label>
+        <input type="number" id="length" step="0.01">
+    </div>
+    <div class="form-group">
+        <label for="density">密度(g/cm³):</label>
+        <input type="number" id="density" step="0.01" value="1.0">
+    </div>
+    <div class="form-group">
+        <label for="quantity">数量:</label>
+        <input type="number" id="quantity" value="1">
+    </div>
+    <div class="form-group">
+        <label for="pricePerKg">单价(元/kg):</label>
+        <input type="number" id="pricePerKg" step="0.01" value="10.0">
+    </div>
+    <button onclick="calculateQuote()">计算报价</button>
+    <div id="result"></div>
+
+    <script src="latex_tube_quote.js"></script>
+</body>
+</html>
