@@ -1,33 +1,67 @@
-function calculateQuote() {
-    // 获取输入值
-    const innerDiameter = parseFloat(document.getElementById('innerDiameter').value);
-    const outerDiameter = parseFloat(document.getElementById('outerDiameter').value);
-    const length = parseFloat(document.getElementById('length').value);
-    const density = parseFloat(document.getElementById('density').value);
-    const quantity = parseInt(document.getElementById('quantity').value);
-    const pricePerKg = parseFloat(document.getElementById('pricePerKg').value);
-
-    // 验证输入
-    if (isNaN(innerDiameter) || isNaN(outerDiameter) || isNaN(length) || 
-        isNaN(density) || isNaN(quantity) || isNaN(pricePerKg)) {
-        alert('请输入有效的数值');
-        return;
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
     }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
 
-    // 计算截面积 (mm²)
-    const area = Math.PI * (Math.pow(outerDiameter/2, 2) - Math.pow(innerDiameter/2, 2));
+function calculateTubePrice() {
+    const innerDiameter = parseFloat(document.getElementById('tubeInnerDiameter').value);
+    const outerDiameter = parseFloat(document.getElementById('tubeOuterDiameter').value);
+    const length = parseFloat(document.getElementById('tubeLength').value);
+    const density = parseFloat(document.getElementById('tubeDensity').value);
+    const quantity = parseInt(document.getElementById('tubeQuantity').value);
     
-    // 计算体积 (cm³)
-    const volume = (area * length * 1000) / 1000; // 转换为cm³
-    
-    // 计算重量 (g)
-    const weight = volume * density; // 转换为g
-    
-    // 计算总价
-    const totalPrice = (weight / 1000) * pricePerKg * quantity;
+    // 乳胶管计算公式
+    const thickness = (outerDiameter - innerDiameter) / 2;
+    const volumePerMeter = Math.PI * (outerDiameter * outerDiameter - innerDiameter * innerDiameter) / 4 * 0.001;
+    const weightPerMeter = volumePerMeter * density * 1000;
+    const pricePerKg = parseFloat(document.getElementById('tubePricePerKg').value);
+    const pricePerMeter = weightPerMeter * pricePerKg / 1000;
+    const taxRate = 0.08;
+    document.getElementById('tubeResult').innerHTML = 
+        `重量: ${weightPerMeter.toFixed(1)}g/米<br>单价: ¥${pricePerMeter.toFixed(2)}元/米<br>含税单价: ¥${(pricePerMeter * (1 + taxRate)).toFixed(2)}元/米`;
+}
 
-    // 显示结果
-    document.getElementById('result').innerHTML = 
-        `重量: ${weight.toFixed(2)} g<br>
-        总价: ${totalPrice.toFixed(2)} 元`;
+function calculateSheetPrice() {
+    const length = parseFloat(document.getElementById('sheetCircumference').value);
+    const width = parseFloat(document.getElementById('sheetWidth').value);
+    const thickness = parseFloat(document.getElementById('sheetThickness').value);
+    const density = 1; // 密度默认为1
+    const quantity = parseInt(document.getElementById('sheetQuantity').value);
+    
+    // 乳胶片新计算公式
+    const area = length * width; // 面积
+    const volume = area * thickness; // 立方厘米
+    const weight = volume * density; // 克
+    const pricePerKg = parseFloat(document.getElementById('sheetPricePerKg').value);
+    const pricePerPiece = (weight / 1000) * pricePerKg;
+    const taxRate = 0.08;
+    document.getElementById('sheetResult').innerHTML = 
+        `重量: ${weight.toFixed(2)}g/条<br>单价: ¥${pricePerPiece.toFixed(2)}元/条<br>含税单价: ¥${(pricePerPiece * (1 + taxRate)).toFixed(2)}元/条`;
+}
+
+function calculateRingPrice() {
+    const circumference = parseFloat(document.getElementById('ringCircumference').value);
+    const width = parseFloat(document.getElementById('ringWidth').value);
+    const thickness = parseFloat(document.getElementById('ringThickness').value);
+    const density = 1; // 密度默认为1
+    const quantity = parseInt(document.getElementById('ringQuantity').value);
+    
+    // 乳胶圈计算公式
+    const area = length * width; // 面积
+    const volume = area * thickness; // 立方厘米
+    const weight = volume * density; // 克
+    const pricePerKg = parseFloat(document.getElementById('ringPricePerKg').value);
+    const pricePerPiece = (weight / 1000) * pricePerKg;
+    const taxRate = 0.08;
+    document.getElementById('ringResult').innerHTML = 
+        `重量: ${weight.toFixed(2)}g/个<br>单价: ¥${pricePerPiece.toFixed(2)}元/个<br>含税单价: ¥${(pricePerPiece * (1 + taxRate)).toFixed(2)}元/个`;
 }
