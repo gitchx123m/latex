@@ -56,7 +56,7 @@ function calculateRingPrice() {
     const quantity = parseInt(document.getElementById('ringQuantity').value);
     
     // 乳胶圈计算公式
-    const area = length * width; // 面积
+    const area = circumference * width; // 面积
     const volume = area * thickness; // 立方厘米
     const weight = volume * density; // 克
     const pricePerKg = parseFloat(document.getElementById('ringPricePerKg').value);
