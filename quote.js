@@ -15,7 +15,7 @@ function openTab(evt, tabName) {
 function calculateTubePrice() {
     const innerDiameter = parseFloat(document.getElementById('tubeInnerDiameter').value);
     const outerDiameter = parseFloat(document.getElementById('tubeOuterDiameter').value);
-    const length = parseFloat(document.getElementById('tubeLength').value);
+    const lengthPerPiece = parseFloat(document.getElementById('tubeLengthPerPiece').value);
     const density = parseFloat(document.getElementById('tubeDensity').value);
     const quantity = parseInt(document.getElementById('tubeQuantity').value);
     
@@ -23,11 +23,12 @@ function calculateTubePrice() {
     const thickness = (outerDiameter - innerDiameter) / 2;
     const volumePerMeter = Math.PI * (outerDiameter * outerDiameter - innerDiameter * innerDiameter) / 4 * 0.001;
     const weightPerMeter = volumePerMeter * density * 1000;
+    const weightPerPiece = weightPerMeter * lengthPerPiece;
     const pricePerKg = parseFloat(document.getElementById('tubePricePerKg').value);
-    const pricePerMeter = weightPerMeter * pricePerKg / 1000;
+    const pricePerPiece = (weightPerPiece / 1000) * pricePerKg;
     const taxRate = 0.08;
     document.getElementById('tubeResult').innerHTML = 
-        `重量: ${weightPerMeter.toFixed(1)}g/米<br>单价: ¥${pricePerMeter.toFixed(2)}元/米<br>含税单价: ¥${(pricePerMeter * (1 + taxRate)).toFixed(2)}元/米`;
+        `重量: ${weightPerPiece.toFixed(1)}g/根<br>单价: ¥${pricePerPiece.toFixed(2)}元/根<br>含税单价: ¥${(pricePerPiece * (1 + taxRate)).toFixed(2)}元/根`;
 }
 
 function calculateSheetPrice() {
@@ -63,5 +64,5 @@ function calculateRingPrice() {
     const pricePerPiece = (weight / 1000) * pricePerKg;
     const taxRate = 0.08;
     document.getElementById('ringResult').innerHTML = 
-        `重量: ${weight.toFixed(2)}g/个<br>单价: ¥${pricePerPiece.toFixed(2)}元/个<br>含税单价: ¥${(pricePerPiece * (1 + taxRate)).toFixed(2)}元/个`;
+        `重量: ${weight.toFixed(2)}g/条<br>单价: ¥${pricePerPiece.toFixed(2)}元/条<br>含税单价: ¥${(pricePerPiece * (1 + taxRate)).toFixed(2)}元/条`;
 }
